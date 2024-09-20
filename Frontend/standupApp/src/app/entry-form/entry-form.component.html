@@ -1,0 +1,71 @@
+<div class="container body">
+<form (ngSubmit)="onSubmit()" #entryForm="ngForm">
+  <div>
+    <label for="date">Date:</label>
+    <input type="date" id="date" name="date" [(ngModel)]="entry.date" required>
+  </div>
+
+  <div>
+    <label for="day">Day:</label>
+    <input type="text" id="day" name="day" [value]="entry.dayOfWeek" placeholder="Invalid date" readonly>
+  </div>
+
+  <div style="display: flex; align-items: center;">
+    <div style="margin-right: 8px; width: 100%;">
+      <label for="time">Time:</label>
+      <input type="time" id="time" name="time" [(ngModel)]="entry.time" required>
+    </div>
+  </div>
+
+  <div>
+    <label for="name">Name:</label>
+    <select id="name" name="name" [(ngModel)]="entry.name" (change)="onNameChange($event)"  required>
+      <option value="" disabled>Assign Name</option>
+      <option *ngFor="let name of names" [value]="name">{{ name }}</option>
+      <option value="addNew">ADD New</option>
+    </select>
+
+    <div *ngIf="addingNew">
+      <input type="text" name="newName" placeholder="Enter new name" [(ngModel)]="newName">
+      <button type="button" (click)="addNewName()">Add</button>
+    </div>
+  </div>
+
+  <div>
+    <label for="taskname">Task name:</label>
+    <textarea id="taskname" name="taskname" [(ngModel)]="entry.task" required></textarea>
+  </div>
+
+  <div>
+    <label for="status">Status:</label>
+    <select id="status" name="status" [(ngModel)]="entry.status" required>
+      <option value="" disabled>Select Status</option>
+      <option value="In Progress">In Progress</option>
+      <option value="On Hold">On Hold</option>
+      <option value="Completed">Completed</option>
+      <option value="Pending">Pending</option>
+    </select>
+    
+  </div>
+
+  <div>
+    <label for="logHours">Log Hours </label>
+    <input
+      type="text"
+      id="logHours"
+      [(ngModel)]="entry.logHours"
+      name="logHours"
+      required
+      placeholder="e.g., 2hrs 15min"
+      title="Enter time in format 'Xhrs Ymin', e.g., '2hrs 30min'"
+    >
+  </div>
+
+  <button type="submit" [disabled]="!entryForm.form.valid">Submit</button>
+
+  <div *ngIf="successMessageVisible" class="toast-notification">
+    Data saved successfully!
+  </div>
+</form>
+
+</div>

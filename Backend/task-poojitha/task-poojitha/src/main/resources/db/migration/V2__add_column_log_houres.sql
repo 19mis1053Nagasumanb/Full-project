@@ -1,0 +1,1 @@
+ALTER TABLE task ADD COLUMN log_hours VARCHAR(20);

@@ -1,0 +1,172 @@
+.entry-list {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+
+  &.modal-active {
+    filter: blur(3px);
+  }
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 10px;
+  margin-top: 0;
+}
+
+.filter-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+
+  label {
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      input {
+        padding: 8px;
+        font-size: 14px;
+        padding-right: 30px;
+      }
+
+      .clear-btn {
+        position: absolute;
+        left: 180px;
+        border: none;
+        background: none;
+        color: #888;
+        font-size: 1.2em;
+        cursor: pointer;
+
+        &:hover {
+          color: #333;
+          background-color: #d2eded;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+}
+
+button {
+  background-color: red;
+  border: red;
+  color: white;
+  cursor: pointer;
+  border-radius: 2px;
+
+  &.edit {
+    background-color: #04AA6D;
+    border: 04AA6D;
+    margin-right: 5px;
+  }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 14px;
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+
+  th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+
+  // Add alternate row colors
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+  tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+  }
+
+  // Add hover effect
+  tbody tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+  }
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.pagination-controls {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  margin-left: 1000px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  z-index: 1000;
+
+  button {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    display: inline-block;
+    font-size: 14px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 5px;
+
+    &.active {
+      background-color: #0056b3;
+    }
+
+    &[disabled] {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  }
+}
+
+p {
+  margin-left: 400px;
+  color: #ff0000;
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+.toast-notification {
+  position: fixed;
+  top: 20px;
+  right: 50px;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  font-weight: bold;
+  transition: right 0.5s ease;
+  background-color: green;
+}
+
+.toast-notification.ng-animate.ng-trigger.ng-if {
+  right: 20px;
+  background-color: green;
+}

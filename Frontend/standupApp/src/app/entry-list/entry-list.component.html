@@ -1,0 +1,100 @@
+<div class="entry-list">
+  <h2>Task Entries</h2>
+  <div class="filter-section">
+    <label>
+      Name:
+      <div class="input-wrapper">
+        <input [(ngModel)]="searchName" (input)="filterEntriesName()" placeholder="Search by name">
+        <button *ngIf="searchName" class="clear-btn" (click)="clearFilter('name')">✕</button>
+      </div>
+    </label>
+    <label>
+      Date:
+      <div class="input-wrapper">
+        <input [(ngModel)]="searchDate" (input)="filterEntriesDate()" type="date" placeholder="Search by date">
+      </div>
+    </label>
+    <label>
+      Status:
+      <div class="input-wrapper">
+        <input [(ngModel)]="searchStatus" (input)="filterEntriesStatus()" placeholder="Search by status">
+        <button *ngIf="searchStatus" class="clear-btn" (click)="clearFilter('status')">✕</button>
+      </div>
+    </label>
+  </div>
+  
+  
+  <table>
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Day of Week</th>
+        <th>Time</th>
+        <th>Task</th>
+        <th>Status</th>
+        <th>Log Hours</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let entry of paginatedEntries">
+        <td>{{ entry.id }}</td>
+        <td>{{ entry.name }}</td>
+        <td>{{ entry.date | date: 'yyyy-MM-dd' }}</td>
+        <td>{{ entry.dayOfWeek }}</td>
+        <td>{{ entry.time }}</td>
+        <td>{{ entry.task }}</td>
+        <!-- <td>{{ entry.status }}</td> -->
+        <td>
+          <ng-container *ngIf="editingEntryId !== entry.id">
+            <span (click)="startEditing(entry)">{{ entry.status }}</span>
+          </ng-container>
+        
+          <ng-container *ngIf="editingEntryId === entry.id">
+            <select [(ngModel)]="entry.status" (ngModelChange)="saveStatus(entry)">
+              <option *ngFor="let status of statusOptions" [value]="status">
+                {{ status }}
+              </option>
+            </select>
+          </ng-container>
+        </td>
+        
+         
+        <td>{{ entry.logHours }}</td>
+        <td>
+          <button class="edit" (click)="openEditModal(entry)">Edit</button>
+
+          <button (click)="deleteEntry(entry.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+    
+    
+  </table>
+  <div *ngIf="filteredEntries.length === 0">
+    <p>No Data Found</p>
+  </div>
+  <div class="pagination-controls">
+    <button (click)="goToPreviousPage()" [disabled]="currentPage === 1">Previous</button>
+    <button *ngFor="let page of [].constructor(totalPages); let i = index"
+            (click)="goToPage(i + 1)"
+            [ngClass]="{'active': currentPage === (i + 1)}">
+      {{ i + 1 }}
+    </button>
+    <button (click)="goToNextPage()" [disabled]="currentPage === totalPages">Next</button>
+  </div>
+</div>
+
+<app-editmodal 
+  *ngIf="isEditModalVisible" 
+  [entry]="selectedEntry ? selectedEntry : defaultTaskEntity"
+  [showModal]="isEditModalVisible"
+  (save)="saveEntry($event)" 
+  (closeEvent)="isEditModalVisible = false">
+</app-editmodal>
+
+<div *ngIf="successMessageVisible" class="toast-notification">
+  Data updated successfully!
+</div>
